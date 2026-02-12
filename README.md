@@ -138,55 +138,6 @@ STOP
 
 ---
 
-# 📂 Estrutura de Pastas Sugerida
-
-```
-voice-line-follower/
-│
-├── README.md
-│
-├── docs/
-│   ├── arquitetura.png
-│   ├── diagramas/
-│   └── protocolo.md
-│
-├── matlab/
-│   ├── v1_aquisicao_audio/
-│   ├── v2_preprocessamento/
-│   ├── v3_features/
-│   ├── v4_classificacao/
-│   ├── v5_serial_tx/
-│   └── testes/
-│
-├── firmware_cliente/
-│   ├── v1_serial_bridge/
-│   ├── v2_parser_cmd/
-│   ├── v3_bt_tx/
-│   └── testes/
-│
-├── esp32_servidor/
-│   ├── v1_bt_rx/
-│   ├── v2_line_follower/
-│   ├── v3_rfid/
-│   ├── v4_integracao/
-│   └── testes/
-│
-├── rfid_tags/
-│   ├── mapa_tags.csv
-│   └── ids/
-│
-├── hardware/
-│   ├── esquematicos/
-│   ├── pinagem/
-│   └── lista_materiais.md
-│
-└── media/
-    ├── fotos/
-    └── videos/
-```
-
----
-
 # 🔄 Versionamento por Etapas
 
 ## ✅ V1 — Aquisição de Áudio
@@ -236,49 +187,6 @@ voice-line-follower/
 
 ---
 
-# 🧪 Estratégia de Testes (Importante)
-
-## Testar módulos isoladamente:
-
-### MATLAB
-
-* salvar áudio
-* classificar offline
-* enviar serial fake
-
-### Cliente
-
-* receber serial
-* reenviar Bluetooth
-* log de mensagens
-
-### ESP32
-
-* receber comando
-* seguir linha sem RFID
-* ler RFID sem linha
-
-Depois integrar.
-
----
-
-# ❓ Pergunta Importante — Mesmo ESP32 para linha + dados?
-
-**Sim — totalmente viável.**
-
-ESP32 suporta:
-
-* Bluetooth
-* SPI (RFID)
-* GPIO sensores linha
-* PWM motores
-
-Use:
-
-* tarefas separadas (FreeRTOS)
-* máquina de estados
-
----
 
 # 🛠️ Processo de Desenvolvimento
 
@@ -292,25 +200,3 @@ Use:
 8. Integração
 9. Protocolo completo
 10. Documentação
-
----
-
-# 📚 Referências
-
-* MATLAB Audio Processing
-* ESP32 UART / Bluetooth
-* MFRC522 Datasheet
-* Controle de robôs seguidores de linha
-* Documentação interna PETEE
-
----
-
-# 👥 Projeto Didático
-
-Protótipo aberto para ensino, extensão e experimentação.
-
----
-
-# 📢 Licença
-
-Uso didático e acadêmico permitido. Cite o projeto ao reutilizar.
