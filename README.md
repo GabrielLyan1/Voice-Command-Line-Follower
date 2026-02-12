@@ -1,133 +1,316 @@
-# 📡 Walkie-Talk
- - Este modelo de rádio comunicador faz parte da proposta de projeto calouros e visa o enriquecimento e melhoria do acervo no âmbito da iniciativa PETEE Protótipos (UFMG). Como proposta inicial, será desenvolvido um protótipo voltado à experimentação em Telecomunicações, aplicável em disciplinas e oficinas de extensão. O modelo consiste em um protótipo de circuitos gêmeos, criados aos pares ou mais, em cada um deles, além dos periféricos de comunicação, haverá um módulo transceptor que, quando operando na mesma frequência, será capaz de manter um canal de comunicação.
----
+# 🎤➡️📶 Voice Command Line Follower — MATLAB + Bluetooth + ESP32 + RFID
 
-## 📌 Objetivo do protótipo e documentação
-- Demonstrar um modocumentação **didática, funcional, completa e de fácil edição**.
-- Demonstra a importância em separar dodumentação e relatório.
-- Produzir um protótipo acessível para estudantes e que diversifique o acervo do Petee.
-- Apoiar atividades de ensino e extensão com um material prático e interativo.
+Este projeto faz parte da proposta de desenvolvimento de protótipos didáticos voltados a **robótica, instrumentação e processamento de sinais**, com foco em integração entre **áudio, MATLAB, microcontroladores e sistemas embarcados**.
 
----
-## ⚡ Especificações – Módulo SA828-U  
+O sistema permite que um **comando de voz capturado no notebook** seja processado no **MATLAB**, convertido em valor numérico e transmitido para um **microcontrolador cliente**, que envia via **Bluetooth (HC-05)** para um **ESP32 servidor** responsável por um **robô seguidor de linha**.
+O robô executa a navegação e **para em pontos específicos da pista** com base na leitura de **tags RFID (MFRC522)**.
 
-| Categoria                     | Especificação |
-|-------------------------------|---------------|
-| **Faixa de frequência (UHF)** | 400 – 480 MHz |
-| **Potência de saída (TX)**    | até ~1.5 W (≈ 30 a 32.5 dBm) |
-| **Sensibilidade (RX)**        | ~–124 dBm |
-| **Alcance estimado**          | 3 – 5 km em campo aberto (dependendo da antena e ambiente) |
-| **Alimentação (Vcc)**         | 3.3 V a 5.5 V (típico 4.2 V) |
-
-### Consumo de Corrente  
-
-| Modo                  | Corrente típica |
-|------------------------|-----------------|
-| RX                     | ~60 mA |
-| TX (alta potência)     | ~800 – 900 mA |
-| TX (baixa potência)    | ~350 – 450 mA |
-| Repouso (sleep)        | ≤ 3 µA |
-
-### Comunicação  
-
-| Parâmetro                  | Especificação |
-|-----------------------------|---------------|
-| Largura de banda            | 12.5 kHz / 25 kHz |
-| Modulação                   | FM |
-| Rejeição de canal adjacente | –60 dBc a 12.5 kHz |
-| Códigos de áudio            | CTCSS (38 níveis), CDCSS (166 níveis) |
-
-### Áudio  
-
-| Parâmetro                  | Especificação |
-|-----------------------------|---------------|
-| Saída do alto-falante       | ~2 W |
-| Impedância recomendada       | 8 Ω |
-
-### Recursos Extras
-- Controle de potência (alto/baixo) via pino H/L  
-- Configuração via interface UART e software de PC  
-- Oscilador TCXO 1 ppm (alta estabilidade de frequência)  
-- Temperatura de operação: –30 °C a +70 °C  
-
+O repositório é organizado por **etapas de versionamento**, permitindo evolução modular e testes independentes.
 
 ---
 
-## 🧰 Materiais Usados
-| Referência | Quantidade | Valor / Modelo | Descrição                             | Datasheet                                                   |
-| ---------- | ---------- | -------------- | ------------------------------------- | ----------------------------------------------------------- |
-| BT1        | 1          | 1042           | Suporte de bateria                    | [PDF](https://www.diodes.com/assets/Datasheets/ds30396.pdf) |
-| D1         | 1          | 1N4148WT       | Diodo retificador rápido, 75V / 0.15A | [PDF](https://www.diodes.com/assets/Datasheets/ds30396.pdf) |
-| LS1        | 1          | POM-3542P-R    | Microfone eletreto                    | [PDF](https://www.diodes.com/assets/Datasheets/ds30396.pdf) |
-| LS2        | 1          | KSSG2308       | Alto-falante                          | [PDF](https://www.diodes.com/assets/Datasheets/ds30396.pdf) |
-| S1         | 1          | PB400OAQR1BLK  | Botão push-button                     | [PDF](https://www.diodes.com/assets/Datasheets/ds30396.pdf) |
-| SATRX1     | 1          | SA828U         | Módulo de rádio UHF                   | [PDF](https://www.diodes.com/assets/Datasheets/ds30396.pdf) |
+# 📌 Objetivo do Protótipo
+
+* Demonstrar integração entre:
+
+  * Processamento de áudio (MATLAB)
+  * Comunicação serial
+  * Bluetooth clássico (HC-05)
+  * ESP32
+  * Seguidor de linha
+  * RFID
+* Criar documentação **didática, modular e versionável**
+* Permitir testes por blocos independentes
+* Servir como base para projetos PETEE / ensino de sistemas embarcados
 
 ---
 
-## 📐 Esquemáticos
-- **Esquemático**  
-  ![Walkie Talk](https://github.com/hitcode47/Walkie-Talk/blob/main/Imagens%20e%20esquem%C3%A1ticos/esquem%C3%A1tico_WT.png)  
+# 🧭 Arquitetura do Sistema
 
-- **Footprint**  
-  ![Walkie Talk](https://github.com/hitcode47/Walkie-Talk/blob/main/Imagens%20e%20esquem%C3%A1ticos/esquem%C3%A1tico_footprint_WT.png)  
-
-
----
-## 🖼️ Modelos 3D  
-
-- 📂 [Arquivos de carcaça e suporte (STL/STEP)](./3d_models)  
-
-### PCB  
-
-- **Modelo Frontal**  
-  ![PCB Frontal](https://github.com/hitcode47/Walkie-Talk/blob/main/Imagens%20e%20esquem%C3%A1ticos/walkie%20talk.png)  
-
-- **Modelo de Fundo**  
-  ![PCB Fundo](https://github.com/hitcode47/Walkie-Talk/blob/main/Imagens%20e%20esquem%C3%A1ticos/walkie%20talk_back.png)  
-
+```
+Microfone (HW-484)
+      ↓
+Notebook / MATLAB
+(processamento de áudio)
+      ↓ serial
+Microcontrolador CLIENTE
+      ↓ Bluetooth HC-05
+ESP32 SERVIDOR
+      ↓
+Seguidor de linha + RFID
+```
 
 ---
 
-## 🎥 Mídia    
+# 🧠 Conceito Cliente–Servidor
 
-- **Vídeo 1 – Visão PCB**  
-  [![Vídeo 1](./media/video1_thumb.png)](https://youtu.be/KtvOQ1vCON0)  
+## 💻 CLIENTE
 
-- **Vídeo 2 – Visão Compacta**  
-  [![Vídeo 2](./media/video2_thumb.png)](https://youtu.be/7ha7i7AOuKI)  
+Responsável por:
 
-- **Vídeo 3 – Visão Explodida**  
-  [![Vídeo 3](./media/video3_thumb.png)](https://youtu.be/o6cVx7rBvNw)  
+* Receber comando interpretado pelo MATLAB
+* Encapsular mensagem
+* Enviar via Bluetooth
 
----
+**Hardware:**
 
-## 🛠️ Processo de Produção (Ainda em construção)
-1. **Definição de requisitos** (alcance, custo, alimentação).  
-2. **Projeto esquemático** no KiCad.  
-3. **Protótipo em breadboard** para testes iniciais.  
-4. **PCB** e montagem final.  
-5. **Testes de calibração e validação**.  
-6. **Documentação e publicação** no GitHub.  
+* Microcontrolador
+* HC-05
+* Interface serial USB
 
 ---
 
-## 📚 Referências
-- Sedra & Smith – *Microeletrônica*.  
-- Haykin – *Sistemas de Comunicação*.  
-- Tutoriais de RF (AllAboutCircuits, EEVBlog).  
-- Documentação interna PETEE.  
+## 🤖 SERVIDOR (ESP32)
+
+Responsável por:
+
+* Receber comando
+* Controlar seguidor de linha
+* Ler RFID
+* Decidir parada na pista
 
 ---
 
-## 👥 Equipe
-- **PETEE – UFMG**  
-- Petiano responsável: *[Bruno dos Santos Lopes]*  
-- Tutor: *[Nome do Professor]*  
+# 🎙️ Parte de Áudio (MATLAB)
+
+Funções do MATLAB:
+
+* Aquisição de áudio do microfone
+* Pré-processamento
+* Extração de características
+* Classificação do comando
+* Conversão para código numérico
+* Envio via serial
+
+Exemplo de saída:
+
+```
+CMD,3
+```
 
 ---
 
-## 📢 Licença
-Projeto aberto para fins didáticos. Cite **PETEE – UFMG** ao utilizar.  
+# 📡 Protocolo de Comunicação
+
+Mensagens textuais via serial/Bluetooth:
+
+```
+READY
+CMD,3
+ACK,3
+TAG,3
+STOP
+```
+
+## Significados
+
+| Mensagem | Origem  | Significado         |
+| -------- | ------- | ------------------- |
+| READY    | ESP32   | sistema pronto      |
+| CMD,x    | Cliente | comando reconhecido |
+| ACK,x    | ESP32   | confirmação         |
+| TAG,x    | ESP32   | RFID detectada      |
+| STOP     | ESP32   | robô parado         |
 
 ---
+
+# ⚙️ Módulos de Hardware
+
+## 🎤 Entrada de Áudio
+
+* Microfone HW-484
+* Entrada notebook
+
+## 📶 Comunicação
+
+* HC-05 Bluetooth
+* UART serial
+
+## 🤖 Controle
+
+* ESP32
+* Sensores de linha
+* Drivers de motor
+
+## 🏷️ Identificação
+
+* MFRC522 RFID 13.56 MHz
+
+---
+
+# 📂 Estrutura de Pastas Sugerida
+
+```
+voice-line-follower/
+│
+├── README.md
+│
+├── docs/
+│   ├── arquitetura.png
+│   ├── diagramas/
+│   └── protocolo.md
+│
+├── matlab/
+│   ├── v1_aquisicao_audio/
+│   ├── v2_preprocessamento/
+│   ├── v3_features/
+│   ├── v4_classificacao/
+│   ├── v5_serial_tx/
+│   └── testes/
+│
+├── firmware_cliente/
+│   ├── v1_serial_bridge/
+│   ├── v2_parser_cmd/
+│   ├── v3_bt_tx/
+│   └── testes/
+│
+├── esp32_servidor/
+│   ├── v1_bt_rx/
+│   ├── v2_line_follower/
+│   ├── v3_rfid/
+│   ├── v4_integracao/
+│   └── testes/
+│
+├── rfid_tags/
+│   ├── mapa_tags.csv
+│   └── ids/
+│
+├── hardware/
+│   ├── esquematicos/
+│   ├── pinagem/
+│   └── lista_materiais.md
+│
+└── media/
+    ├── fotos/
+    └── videos/
+```
+
+---
+
+# 🔄 Versionamento por Etapas
+
+## ✅ V1 — Aquisição de Áudio
+
+* Captura via MATLAB
+* Plot de waveform
+* Teste de taxa de amostragem
+
+## ✅ V2 — Processamento de Áudio
+
+* Filtros
+* Normalização
+* Segmentação
+
+## ✅ V3 — Classificação
+
+* Extração de features
+* Classificador numérico
+* Saída CMD,x
+
+## ✅ V4 — Serial MATLAB → Cliente
+
+* Envio serial
+* Teste loopback
+
+## ✅ V5 — Cliente → Bluetooth
+
+* Ponte serial → HC-05
+
+## ✅ V6 — ESP32 Bluetooth RX
+
+* Parser de mensagens
+
+## ✅ V7 — Seguidor de Linha
+
+* Controle isolado
+* PID opcional
+
+## ✅ V8 — RFID
+
+* Leitura UID
+* Mapeamento de tags
+
+## ✅ V9 — Integração Total
+
+* Comando → pista → parada
+
+---
+
+# 🧪 Estratégia de Testes (Importante)
+
+## Testar módulos isoladamente:
+
+### MATLAB
+
+* salvar áudio
+* classificar offline
+* enviar serial fake
+
+### Cliente
+
+* receber serial
+* reenviar Bluetooth
+* log de mensagens
+
+### ESP32
+
+* receber comando
+* seguir linha sem RFID
+* ler RFID sem linha
+
+Depois integrar.
+
+---
+
+# ❓ Pergunta Importante — Mesmo ESP32 para linha + dados?
+
+**Sim — totalmente viável.**
+
+ESP32 suporta:
+
+* Bluetooth
+* SPI (RFID)
+* GPIO sensores linha
+* PWM motores
+
+Use:
+
+* tarefas separadas (FreeRTOS)
+* máquina de estados
+
+---
+
+# 🛠️ Processo de Desenvolvimento
+
+1. Testar áudio no MATLAB
+2. Classificar comandos
+3. Serial MATLAB → cliente
+4. Cliente → Bluetooth
+5. ESP32 recebe
+6. Seguidor de linha isolado
+7. RFID isolado
+8. Integração
+9. Protocolo completo
+10. Documentação
+
+---
+
+# 📚 Referências
+
+* MATLAB Audio Processing
+* ESP32 UART / Bluetooth
+* MFRC522 Datasheet
+* Controle de robôs seguidores de linha
+* Documentação interna PETEE
+
+---
+
+# 👥 Projeto Didático
+
+Protótipo aberto para ensino, extensão e experimentação.
+
+---
+
+# 📢 Licença
+
+Uso didático e acadêmico permitido. Cite o projeto ao reutilizar.
