@@ -1,9 +1,0 @@
-(fp_lib_table
-  (version 7)
-  (lib (name "PB400OAQR1BLK")(type "KiCad")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/pb/PB400OAQR1BLK")(options "")(descr ""))
-  (lib (name "PB400OAQR1BLK (1)")(type "KiCad")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/pb/PB400OAQR1BLK (1)")(options "")(descr ""))
-  (lib (name "POM-3542P-R (1)")(type "KiCad")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/mic/POM-3542P-R (1)")(options "")(descr ""))
-  (lib (name "Alto-falante")(type "KiCad")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/Alto-falante/KSSG2308")(options "")(descr ""))
-  (lib (name "sa828u_kicad-master")(type "KiCad")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/sa828u")(options "")(descr ""))
-  (lib (name "Suporte_bateria")(type "KiCad")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/Suporte_bateria")(options "")(descr ""))
-)

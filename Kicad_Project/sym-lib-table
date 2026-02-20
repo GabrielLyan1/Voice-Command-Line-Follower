@@ -1,8 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "PB400OAQR1BLK")(type "Legacy")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/pb/PB400OAQR1BLK/PB400OAQR1BLK.lib")(options "")(descr ""))
-  (lib (name "POM-3542P-R")(type "Legacy")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/mic/POM-3542P-R/POM-3542P-R.lib")(options "")(descr ""))
-  (lib (name "KSSG2308")(type "Legacy")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/Alto-falante/KSSG2308/KSSG2308.lib")(options "")(descr ""))
-  (lib (name "sa828u")(type "Legacy")(uri "${COMPONENTES}/SA828U.lib")(options "")(descr ""))
-  (lib (name "btref_1042")(type "Legacy")(uri "C:/Users/bruno/OneDrive/Área de Trabalho/Radio/Suporte_bateria/1042.lib")(options "")(descr ""))
-)
