@@ -2,7 +2,7 @@
 
 Este projeto faz parte da proposta de desenvolvimento de protótipos didáticos voltados a **robótica, instrumentação e processamento de sinais**, com foco em integração entre **áudio, MATLAB, microcontroladores e sistemas embarcados**.
 
-O sistema permite que um **comando de voz capturado no notebook** seja processado no **MATLAB**, convertido em valor numérico e transmitido para um **microcontrolador cliente**, que envia via **Bluetooth (HC-05)** para um **ESP32 servidor** responsável por um **robô seguidor de linha**.
+O sistema permite que um **comando de voz capturado no notebook** seja processado no **MATLAB**, convertido em valor numérico e transmitido para um **microcontrolador cliente**, que envia via **Bluetooth (BLE)** para um **ESP32 servidor** responsável por um **robô seguidor de linha**.
 O robô executa a navegação e **para em pontos específicos da pista** com base na leitura de **tags RFID (MFRC522)**.
 
 O repositório é organizado por **etapas de versionamento**, permitindo evolução modular e testes independentes.
@@ -15,7 +15,7 @@ O repositório é organizado por **etapas de versionamento**, permitindo evoluç
 
   * Processamento de áudio (MATLAB)
   * Comunicação serial
-  * Bluetooth clássico (HC-05)
+  * Bluetooth dos ESP32 (BLE)
   * ESP32
   * Seguidor de linha
   * RFID
@@ -34,7 +34,7 @@ Notebook / MATLAB
 (processamento de áudio)
       ↓ serial
 Microcontrolador CLIENTE
-      ↓ Bluetooth HC-05
+      ↓ Bluetooth (BLE)
 ESP32 SERVIDOR
       ↓
 Seguidor de linha + RFID
@@ -55,7 +55,6 @@ Responsável por:
 **Hardware:**
 
 * Microcontrolador
-* HC-05
 * Interface serial USB
 
 ---
@@ -118,12 +117,12 @@ STOP
 
 ## 🎤 Entrada de Áudio
 
-* Microfone HW-484
+* Microfone Nativo do PC
 * Entrada notebook
 
 ## 📶 Comunicação
 
-* HC-05 Bluetooth
+* Bluetooth (BLE)
 * UART serial
 
 ## 🤖 Controle
@@ -165,9 +164,9 @@ STOP
 
 ## ✅ V5 — Cliente → Bluetooth
 
-* Ponte serial → HC-05
+* Ponte serial → (BLE)
 
-## ✅ V6 — ESP32 Bluetooth RX
+## ✅ V6 — ESP32 Bluetooth 
 
 * Parser de mensagens
 
