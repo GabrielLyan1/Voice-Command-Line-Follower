@@ -26,7 +26,7 @@
  * PARÂMETROS DE CONTROLE
  * ================================================================ */
 // Threshold para 10 bits (0-1023). Ajuste conforme a cor da sua pista.
-#define ANALOG_THRESHOLD 500 
+#define ANALOG_THRESHOLD 300 
 
 // Constantes PID (Mantidas do seu projeto)
 const float kp = 69;
