@@ -37,7 +37,7 @@ const float ki = 0.03;
 #define PIDRefreshRate 15 // ESP32 é mais rápido, podemos baixar o refresh rate
 
 // Velocidades
-const int nominalSpeed = 180; 
+const int nominalSpeed = 175; // Velocidade base para seguir a linha
 const int MaxSpeed = 255;
 
 float erroAnterior = 0;
@@ -50,7 +50,7 @@ const int sensores[NUM_SENSORES] = {
  * ================================================================ */
 
 void lerSensores(int *outBits) {
-  for (int i = 0; i < NUM_SENSORES; i++) {
+  for (int i = 1; i < NUM_SENSORES-1; i++) {
     // Todos os pinos escolhidos no ESP32 aqui suportam leitura analógica
     int leitura = analogRead(sensores[i]);
     outBits[i] = (leitura <= ANALOG_THRESHOLD) ? 1 : 0;
@@ -58,7 +58,7 @@ void lerSensores(int *outBits) {
 }
 
 bool temLinha(const int *s) {
-  for (int i = 0; i < NUM_SENSORES; i++) {
+  for (int i = 1; i < NUM_SENSORES-1; i++) {
     if (s[i]) return true;
   }
   return false;
@@ -66,7 +66,7 @@ bool temLinha(const int *s) {
 
 void controlarMotores(int pwmE, int pwmD) {
   pwmE = constrain(pwmE, -MaxSpeed, MaxSpeed);
-  pwmD = constrain(pwmD, -MaxSpeed, MaxSpeed);
+  pwmD = constrain(pwmD, -MaxSpeed, MaxSpeed);  
 
   // Lógica para Motor Esquerdo
   if (pwmE >= 0) {
@@ -89,11 +89,11 @@ void controlarMotores(int pwmE, int pwmD) {
 
 float calcularErro(const int *s) {
   // Pesos balanceados para 9 sensores
-  static const int pesos[NUM_SENSORES] = {-8, -4, -2, -1, 0, 1, 2, 4, 8};
+  static const int pesos[NUM_SENSORES] = {0, -5, -2, -1, 0, 1, 2, 4, 0};
   float num = 0;
   int den = 0;
 
-  for (int i = 0; i < NUM_SENSORES; i++) {
+  for (int i = 1; i < NUM_SENSORES-1; i++) {
     num += s[i] * pesos[i];
     den += s[i];
   }
