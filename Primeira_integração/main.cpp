@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <Wire.h>
 #include <Adafruit_PN532.h>
-#include "Config.h"
+#include "config.h"
 #include "Robo_logica.h"
 
 // Objetos Globais
@@ -13,6 +13,8 @@ Adafruit_PN532 nfc(PN532_SDA, PN532_SCL);
 // Variáveis de Estado
 float erroAnterior = 0; 
 unsigned long lastNFCScan = 0;
+uint8_t tagParada1[] = {0x6E, 0x04, 0xF9, 0x03};
+uint8_t tagParada2[] = {0x0B, 0x01, 0xC9, 0x01};
 
 void setup() {
     Serial.begin(115200);
@@ -59,6 +61,7 @@ void setupHardware() {
     }
     pinMode(MOT_IN1, OUTPUT); pinMode(MOT_IN2, OUTPUT);
     pinMode(MOT_IN3, OUTPUT); pinMode(MOT_IN4, OUTPUT);
+    pinMode(2, OUTPUT);
     
     analogReadResolution(10); // 0 a 1023
 }
@@ -67,12 +70,16 @@ void executarSeguidor() {
     int s[NUM_SENSORES];
     bool linhaDetectada = false;
 
-    // Leitura dos sensores
-    for (int i = 1; i < NUM_SENSORES-1; i++) {
+    s[0] = !digitalRead(PINS_SENSORES[1]);
+    //Serial.println(s[0]); Serial.print(" ");
+    // Sensores 1 a 6 (Pinos 36 a 33) - Leitura Analógica ADC1
+    for (int i = 2; i < NUM_SENSORES-1; i++) {
         int leitura = analogRead(PINS_SENSORES[i]);
         s[i] = (leitura <= ANALOG_THRESHOLD) ? 1 : 0;
-        if (s[i]) linhaDetectada = true;
+        //Serial.print(leitura); Serial.print(" ");
+        if (s[i] == 1) linhaDetectada = true;
     }
+    //Serial.println();
 
     if (linhaDetectada) {
         // Cálculo do erro por média ponderada
@@ -166,9 +173,24 @@ void verificarNFC() {
     uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };
     uint8_t uidLength;
     
-    // Leitura não-bloqueante (timeout de 50ms)
+    // Tenta ler a tag com timeout de 50ms para não prejudicar o PID
     if (nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength, 50)) {
-        Serial.print("Tag NFC: ");
-        nfc.PrintHex(uid, uidLength);
+        
+        // Verifica se a tag lida tem 4 bytes (como as suas)
+        if (uidLength == 4) {
+            
+            // Compara com a Tag 1 OU Tag 2
+            if (memcmp(uid, tagParada1, 4) == 0 || memcmp(uid, tagParada2, 4) == 0) {
+                Serial.println("!!! Tag de Parada Detectada !!!");
+                
+                // Para os motores imediatamente
+                controlarMotores(0, 0);
+                
+                // Aguarda 3 segundos (3000ms)
+                delay(3000);
+                
+                Serial.println("Retomando percurso...");
+            }
+        }
     }
 }
